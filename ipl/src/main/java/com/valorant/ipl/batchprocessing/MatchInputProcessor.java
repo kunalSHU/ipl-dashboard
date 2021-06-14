@@ -19,13 +19,13 @@ public class MatchInputProcessor implements ItemProcessor<MatchFromCSV, Match> {
                 .city(matchFromCSV.getCity())
                 .playerOfMatch(matchFromCSV.getPlayer_of_match())
                 .result(matchFromCSV.getResult())
-                .result_margin(matchFromCSV.getResult_margin())
+                .resultMargin(matchFromCSV.getResult_margin())
                 .team1(matchFromCSV.getTeam1())
                 .team2(matchFromCSV.getTeam2())
                 .tossDecision(matchFromCSV.getToss_decision())
                 .venue(matchFromCSV.getVenue())
-                .umpire(matchFromCSV.getUmpire())
                 .umpire1(matchFromCSV.getUmpire1())
+                .umpire2(matchFromCSV.getUmpire2())
                 .build();
     }
 }

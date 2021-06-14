@@ -31,8 +31,7 @@ public class Match {
     private String tossDecision;
     private String matchWinner;
     private String result;
-    private String result_margin;
+    private String resultMargin;
     private String umpire1;
-    private String umpire;
-
+    private String umpire2;
 }

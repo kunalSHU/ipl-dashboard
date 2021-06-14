@@ -24,5 +24,5 @@ public class MatchFromCSV {
     private String eliminator;
     private String method;
     private String umpire1;
-    private String umpire;
+    private String umpire2;
 }
