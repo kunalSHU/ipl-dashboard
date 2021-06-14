@@ -12,7 +12,7 @@ public class MatchInputProcessor implements ItemProcessor<MatchFromCSV, Match> {
     public Match process(final MatchFromCSV matchFromCSV) throws Exception {
 
         // create a match object
-        Match match = Match.builder()
+        return Match.builder()
                 .id(Long.parseLong(matchFromCSV.getId()))
                 .date(LocalDate.parse(matchFromCSV.getDate()))
                 .matchWinner(matchFromCSV.getWinner())
@@ -27,7 +27,5 @@ public class MatchInputProcessor implements ItemProcessor<MatchFromCSV, Match> {
                 .umpire(matchFromCSV.getUmpire())
                 .umpire1(matchFromCSV.getUmpire1())
                 .build();
-
-        return match;
     }
 }
