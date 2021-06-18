@@ -18,7 +18,6 @@ import java.util.Map;
 
 @Slf4j
 @Component
-@Transactional
 public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
 
     private final JdbcTemplate jdbcTemplate;
@@ -66,14 +65,21 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
             // save all teams to Team table with the number of total matches played
             teamTotalMatchesPlayed.forEach((teamName,numGamesPlayed) -> {
+
+                // getting total wins for a team
+                Long totalWins = (Long) em.createQuery("select count('*') from Match where matchWinner= ?1")
+                        .setParameter(1, teamName)
+                        .getSingleResult();
                 Team teamObj = new Team();
                 teamObj.setTeamName(teamName);
                 teamObj.setTotalMatches(numGamesPlayed);
+                teamObj.setTotalWins(totalWins);
                 teamRepository.save(teamObj);
             });
 
             teamRepository.findAll()
-                    .forEach(team -> System.out.println(team.getTeamName() + " :: " + team.getTotalMatches()));
+                    .forEach(team -> System.out.println(team.getTeamName() + " played " + team.getTotalMatches() + " matches and won "
+                    + team.getTotalWins()));
 
         }
 
