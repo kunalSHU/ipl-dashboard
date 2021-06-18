@@ -15,7 +15,7 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping("team/{teamName}")
-    public ResponseEntity<Team> teamInfo(@PathVariable final String teamName) {
+    public ResponseEntity<Team> getTeamInfo(@PathVariable final String teamName) {
         final Team team = teamService.getTeamStats(teamName);
         return ResponseEntity.ok().body(team);
     }
