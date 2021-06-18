@@ -15,7 +15,7 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
-    public void getTeamStats(final String teamName) {
+    public Team getTeamStats(final String teamName) {
       final Team team = teamRepository.findByTeamName(teamName);
 
       // team not found
@@ -24,5 +24,6 @@ public class TeamService {
       }
 
       log.info("This is the team : {} ", team.toString());
+      return team;
     }
 }

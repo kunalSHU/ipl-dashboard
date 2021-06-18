@@ -1,5 +1,6 @@
 package com.valorant.ipl.controller;
 
+import com.valorant.ipl.model.Team;
 import com.valorant.ipl.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping("team/{teamName}")
-    public ResponseEntity<?> teamInfo(@PathVariable String teamName) {
-        teamService.getTeamStats(teamName);
-        return ResponseEntity.ok().body("Team endpoint called");
+    public ResponseEntity<Team> teamInfo(@PathVariable final String teamName) {
+        final Team team = teamService.getTeamStats(teamName);
+        return ResponseEntity.ok().body(team);
     }
 }
