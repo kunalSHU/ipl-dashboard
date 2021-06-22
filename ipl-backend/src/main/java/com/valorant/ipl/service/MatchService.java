@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,9 +13,6 @@ import java.util.stream.Stream;
 @Service
 @Slf4j
 public class MatchService {
-
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private MatchRepository matchRepository;
@@ -32,8 +28,18 @@ public class MatchService {
         matchRepository.findByTeam2(teamName).forEach(match -> matchesTeam2.add(match));
 
         List<Match> allMatches = Stream.concat(matchesTeam1.stream(), matchesTeam2.stream()).collect(Collectors.toList());
-        Collections.reverse(allMatches);
-        System.out.println(allMatches.subList(0,3));
+
+        // sorts matches by date, top 3 latest played matches
+        Comparator<Match> com = (o1, o2) -> {
+            if (o1.getDate().compareTo(o2.getDate()) < 0) {
+                return 1;
+            } else {
+                return -1;
+            }
+        };
+
+        allMatches.sort(com);
+        log.info("{}", allMatches.subList(0,3));
         return allMatches.subList(0,3);
     }
 }

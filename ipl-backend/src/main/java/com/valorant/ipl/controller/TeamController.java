@@ -28,8 +28,8 @@ public class TeamController {
     }
 
     @GetMapping("matches/{teamName}")
-    public String getMatchesHistoryByTeam(@PathVariable final String teamName) {
+    public ResponseEntity<List<Match>> getMatchesHistoryByTeam(@PathVariable final String teamName) {
         final List<Match> matchList = matchService.getMatchesList(teamName);
-        return "Match History endpoint";
+        return ResponseEntity.ok(matchList);
     }
 }
