@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class TeamService {
@@ -25,5 +28,15 @@ public class TeamService {
 
       log.info("This is the team : {} ", team.toString());
       return team;
+    }
+
+    public List<String> getTeams() {
+
+        List<String> teamNames = new ArrayList<>();
+        List<Team> teamsList = teamRepository.findAll();
+
+        teamsList.forEach(obj -> teamNames.add(obj.getTeamName()));
+        log.info("List of team names {} ", teamNames);
+        return teamNames;
     }
 }
