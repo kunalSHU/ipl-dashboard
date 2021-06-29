@@ -1,35 +1,87 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        maxWidth: 300
-      },
-      chips: {
+    root: {
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        minWidth: 300,
+        width: '100%',
       },
-      chip: {
-        margin: 2
+      image: {
+        position: 'relative',
+        height: 200,
+        [theme.breakpoints.down('xs')]: {
+          width: '100% !important', // Overrides inline-style
+          height: 100,
+        },
+        '&:hover, &$focusVisible': {
+          zIndex: 1,
+          '& $imageBackdrop': {
+            opacity: 0.15,
+          },
+          '& $imageMarked': {
+            opacity: 0,
+          },
+          '& $imageTitle': {
+            border: '4px solid currentColor',
+          },
+        },
       },
-      noLabel: {
-        marginTop: theme.spacing(3)
-      }
+      focusVisible: {},
+      imageButton: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: theme.palette.common.white,
+      },
+      imageSrc: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 40%',
+      },
+      imageBackdrop: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        backgroundColor: theme.palette.common.black,
+        opacity: 0.4,
+        transition: theme.transitions.create('opacity'),
+      },
+      imageTitle: {
+        position: 'relative',
+        padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+    },
+    imageMarked: {
+        height: 3,
+        width: 18,
+        backgroundColor: theme.palette.common.white,
+        position: 'absolute',
+        bottom: -2,
+        left: 'calc(50% - 9px)',
+        transition: theme.transitions.create('opacity'),
+    },
 }));
 
 const TeamDropDown = () => {
     const classes = useStyles();
     const [teams, setTeams] = useState<string[]>([]);
-    
     useEffect(() => {
+        
         console.log("Team drop down component loaded");
         axios.get<Array<string>>("http://localhost:8080/teams")
         .then((res) => {
@@ -46,20 +98,35 @@ const TeamDropDown = () => {
     
     return (
     <>
-        <FormControl className={classes.formControl}>
-        <InputLabel id="demo-mutiple-name-label">Name</InputLabel>
-        <Select
-          labelId="demo-mutiple-name-label"
-          id="demo-mutiple-name"
-          onChange={handleChange}
+    <div className={classes.root}>
+      {teams.map((team) => (
+        <ButtonBase
+          focusRipple
+          key={team}
+          className={classes.image}
+          focusVisibleClassName={classes.focusVisible}
+          style={{
+            width: '25%',
+          }}
         >
-          {teams.map(team => (
-            <MenuItem key={team} value={team}>
+          <span
+            className={classes.imageSrc}
+          />
+          <span className={classes.imageBackdrop} />
+          <span className={classes.imageButton}>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              color="inherit"
+              className={classes.imageTitle}
+            >
               {team}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+              <span className={classes.imageMarked} />
+            </Typography>
+          </span>
+        </ButtonBase>
+      ))}
+    </div>
     </>
     )
 }
