@@ -1,12 +1,12 @@
 import React from 'react';
-import TeamDropDown from '../components/TeamDropDown'
+import Teams from '../components/Teams'
 
 const TeamPage: React.FC = () => {
     return (
         <>
             <div className="TeamPage">
                 <h1>Team Dashboard</h1>
-                <TeamDropDown/>
+                <Teams/>
             </div>
         </>
     )
