@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const TeamDropDown = () => {
+const Teams = () => {
     
     const classes = useStyles();
     const [teams, setTeams] = useState<string[]>([]);
@@ -132,4 +132,4 @@ const TeamDropDown = () => {
     )
 }
 
-export default TeamDropDown
+export default Teams
