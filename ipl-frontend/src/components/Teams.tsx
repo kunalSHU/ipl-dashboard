@@ -5,7 +5,8 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import {getTeams} from '../apis/apiService';
 import { resolveModuleNameFromCache } from 'typescript';
- 
+import history from '../history';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -85,6 +86,7 @@ const Teams = () => {
     const [teams, setTeams] = useState<string[]>([]);
     const [teamObj, setTeamObj] = useState<any[]>([]);
     useEffect(() => {
+        console.log("in teams component")
         getTeams().then(res => {
           setTeams(res.data);
         });
@@ -94,6 +96,10 @@ const Teams = () => {
     
     const handleChange = (event : any) => {
         console.log(event.target.innerText);
+
+        // switch route to Team component
+        history.push(`/teams/${event.target.innerText}`)
+        history.go(0) // render the component automatically
     }
     
     return (
