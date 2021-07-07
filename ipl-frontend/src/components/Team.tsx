@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { getTeamInfo } from '../apis/apiService';
 import history from '../history';
+import Matches from './Matches';
 
 interface ITeam {
     teamName: string
@@ -37,6 +38,7 @@ const Team = () => {
                 <p>Total Wins: {teamInfo?.totalWins}</p>
                 <p>Total Matches: {teamInfo?.totalMatches}</p>
             </div>
+            <Matches teamName={teamInfo?.teamName}/>
         </>
     )
 }
