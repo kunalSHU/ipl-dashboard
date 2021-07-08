@@ -44,9 +44,16 @@ public class MatchService {
                 return -1;
             }
         };
-
         allMatches.sort(com);
-        log.info("{}", allMatches.subList(0,3));
-        return allMatches.subList(0,3);
+        List<Match> matchList = allMatches.subList(0,3).stream().map(match -> {
+           // perform swap
+           if (!match.getTeam1().equals(teamName)) {
+              String team2 = match.getTeam1();
+              match.setTeam1(teamName);
+              match.setTeam2(team2);
+           }
+           return allMatches.subList(0,3);
+        }).flatMap(Collection::stream).collect(Collectors.toList());
+        return matchList.subList(0,3);
     }
 }
