@@ -16,7 +16,7 @@ const Match: React.FC<IProps> = ({teamMatch}) => {
 
     return (
         <>
-            <p>{teamMatch.city}</p>
+            <p>{teamMatch.team1} vs {teamMatch.team2}</p>
         </>
     )
 }

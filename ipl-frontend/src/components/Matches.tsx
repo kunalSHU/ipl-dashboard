@@ -29,9 +29,7 @@ const Matches: React.FC<ITeamName> = ({teamName}) => {
     const [teamMatches, setTeamMatches] = useState<Array<ITeamMatch>>();
 
     useEffect(() => {
-        console.log(teamName);
         getMatchesForTeam(teamName).then(res => {
-            console.log(res.data);
             setTeamMatches(res.data)
         })
         return () => {
