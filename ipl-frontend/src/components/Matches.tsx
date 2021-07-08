@@ -41,9 +41,9 @@ const Matches: React.FC<ITeamName> = ({teamName}) => {
     return (
         <>
            <h1>Matches for {teamName} be listed here</h1>
-           {teamMatches?.map(teamMatch => {
+           {teamMatches?.map((teamMatch, i) => {
                console.log(teamMatch);
-               return (<Match teamMatch={teamMatch}/>)
+               return (<Match key={i} teamMatch={teamMatch}/>)
            })} 
         </>
     )
