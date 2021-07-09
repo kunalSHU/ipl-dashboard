@@ -19,13 +19,17 @@ interface ITeamInfo {
 const Team = () => {
 
     const team : ITeam = useParams();
+
     const [teamInfo, setTeamInfo] = useState<ITeamInfo>();
 
     useEffect(() => {
         getTeamInfo(decodeURI(team.teamName)).then(res => {
             setTeamInfo(res.data);
         })
-
+        .catch(err => {
+            console.log("in error")
+            return <p>Team not found</p>
+        })
         return () => {
             history.go(0)
         }
