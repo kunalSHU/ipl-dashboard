@@ -1,0 +1,18 @@
+$small-width: 300px;
+$medium: 600px;
+
+#teamInfo {
+    display: grid;
+    #wins {
+        color: #008000;
+    }
+    .pieChart {
+        position: absolute;
+        top: -340px;
+    }
+}
+
+.teamMatches {
+    padding: 150px;
+}
+

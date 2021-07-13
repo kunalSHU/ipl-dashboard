@@ -4,6 +4,11 @@ import { useParams } from 'react-router-dom';
 import { getTeamInfo } from '../apis/apiService';
 import history from '../history';
 import Matches from './Matches';
+import { PieChart } from 'react-minimal-pie-chart';
+
+import './Team.scss';
+import { teamInfoEndpoint } from '../apis/apiUrl';
+import { CellWifi } from '@material-ui/icons';
 
 interface ITeam {
     teamName: string
@@ -23,6 +28,8 @@ const Team = () => {
     const [teamInfo, setTeamInfo] = useState<ITeamInfo>();
 
     useEffect(() => {
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
         getTeamInfo(decodeURI(team.teamName)).then(res => {
             setTeamInfo(res.data);
         })
@@ -39,10 +46,18 @@ const Team = () => {
         <>
             <div id="teamInfo">
                 <h1>{teamInfo?.teamName}</h1>
-                <p>Total Wins: {teamInfo?.totalWins}</p>
+                <PieChart className="pieChart" radius={6} lineWidth={50}
+                data={[
+                    { title: 'Wins', value: teamInfo?.totalWins !== undefined ? teamInfo.totalWins : 0, color: '#008000' },
+                    { title: 'Losses', value: teamInfo?.totalWins !== undefined ? teamInfo.totalMatches - teamInfo.totalWins : 0, color: '#ff0000' },
+                ]}
+                />
+                <p id="wins">Total Wins: {teamInfo?.totalWins}</p>
                 <p>Total Matches: {teamInfo?.totalMatches}</p>
             </div>
-            <Matches teamName={teamInfo?.teamName}/>
+            <div className="teamMatches">
+                <Matches teamName={teamInfo?.teamName}/>
+            </div>
         </>
     )
 }
