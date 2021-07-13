@@ -33,7 +33,7 @@ const Team = () => {
         return () => {
             history.go(0)
         }
-    }, [])
+    }, [team.teamName])
 
     return (
         <>

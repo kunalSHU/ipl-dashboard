@@ -1,6 +1,6 @@
-import { Divider, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import { Dialog, DialogContent, Divider, List, ListItem, ListItemText, makeStyles, Typography } from '@material-ui/core';
 import SportsCricketIcon from '@material-ui/icons/SportsCricket';
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ITeamMatch } from './Matches';
 
 interface IProps {
@@ -19,18 +19,27 @@ const useStyles = makeStyles((theme) => ({
 const Match: React.FC<IProps> = ({teamMatch}) => {
 
     const classes = useStyles();
-
+    const [open, setOpen] = useState(false);
+    
     useEffect(() => {
         console.log(teamMatch);
-        return () => {
-            
+        return () => {            
         }
     }, [])
+
+    const handleClick = (matchInfo: any) => {
+        console.log(matchInfo);
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
         <List component="nav" className={classes.root} aria-label="mailbox folders">
-            <ListItem button>
+            <ListItem button onClick={() => handleClick(teamMatch)}>
                 <ListItemText>
                     vs {teamMatch.team2}
                     <SportsCricketIcon/>
@@ -38,6 +47,21 @@ const Match: React.FC<IProps> = ({teamMatch}) => {
             </ListItem>
             <Divider />
         </List>
+        <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+        >
+            <DialogContent dividers>
+                <Typography gutterBottom>
+                {teamMatch.date}
+                <br/>
+                at {teamMatch.venue}
+                <br/>
+                {teamMatch.matchWinner} won by {teamMatch.resultMargin} {teamMatch.result} 
+                </Typography>
+            </DialogContent>
+        </Dialog>
         </>
     )
 }
