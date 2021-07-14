@@ -9,6 +9,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import './Team.scss';
 import { teamInfoEndpoint } from '../apis/apiUrl';
 import { CellWifi } from '@material-ui/icons';
+import Grid from "@material-ui/core/Grid";
 
 interface ITeam {
     teamName: string
@@ -46,15 +47,19 @@ const Team = () => {
         <>
             <div id="teamInfo">
                 <h1>{teamInfo?.teamName}</h1>
-                <PieChart className="pieChart" radius={6} lineWidth={50}
-                data={[
-                    { title: 'Wins', value: teamInfo?.totalWins !== undefined ? teamInfo.totalWins : 0, color: '#008000' },
-                    { title: 'Losses', value: teamInfo?.totalWins !== undefined ? teamInfo.totalMatches - teamInfo.totalWins : 0, color: '#ff0000' },
-                ]}
-                />
                 <p id="wins">Total Wins: {teamInfo?.totalWins}</p>
                 <p>Total Matches: {teamInfo?.totalMatches}</p>
             </div>
+            <Grid container justify="center">
+                    <Grid key='0' item>
+                        <PieChart className="pieChart" radius={25} lineWidth={50}
+                        data={[
+                            { title: 'Wins', value: teamInfo?.totalWins !== undefined ? teamInfo.totalWins : 0, color: '#008000' },
+                            { title: 'Losses', value: teamInfo?.totalWins !== undefined ? teamInfo.totalMatches - teamInfo.totalWins : 0, color: '#ff0000' },
+                        ]}
+                        />
+                    </Grid>
+                </Grid>
             <div className="teamMatches">
                 <Matches teamName={teamInfo?.teamName}/>
             </div>
