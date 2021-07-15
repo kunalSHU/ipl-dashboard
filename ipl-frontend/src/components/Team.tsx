@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getTeamInfo } from '../apis/apiService';
 import history from '../history';
 import Matches from './Matches';
@@ -50,9 +50,11 @@ const Team = () => {
                 <p id="wins">Total Wins: {teamInfo?.totalWins}</p>
                 <p>Total Matches: {teamInfo?.totalMatches}</p>
             </div>
-            <Grid container justify="center">
-                    <Grid key='0' item>
-                        <PieChart className="pieChart" radius={25} lineWidth={50}
+            <Link id="link" to="/teams">Back to teams page</Link>
+            
+            <Grid id="gridContainer" container justify="center"> 
+                    <Grid key='0' item alignItems="flex-start">
+                        <PieChart className="pieChart" radius={15}
                         data={[
                             { title: 'Wins', value: teamInfo?.totalWins !== undefined ? teamInfo.totalWins : 0, color: '#008000' },
                             { title: 'Losses', value: teamInfo?.totalWins !== undefined ? teamInfo.totalMatches - teamInfo.totalWins : 0, color: '#ff0000' },

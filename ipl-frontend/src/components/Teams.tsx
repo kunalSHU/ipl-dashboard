@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {getTeams} from '../apis/apiService';
 import { resolveModuleNameFromCache } from 'typescript';
 import history from '../history';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -104,6 +105,8 @@ const Teams = () => {
     
     return (
     <>
+        <Grid container direction='row' justify="flex-start">
+                    <Grid key='0' item xs={12}>
     <div className={classes.root}>
       {teams.map((team) => (
         <ButtonBase
@@ -134,6 +137,8 @@ const Teams = () => {
         </ButtonBase>
       ))}
     </div>
+    </Grid>
+                </Grid>
     </>
     )
 }
