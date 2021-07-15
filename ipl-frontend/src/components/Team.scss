@@ -9,10 +9,17 @@ $medium: 600px;
 
 }
 
+.pieChart {
+    position: relative;
+    top: -50px;
+    margin-left: -150px;
+}
+
 #link {
     position: absolute;
-    top: 0px;
+    top: 10px;
     left: 0px;
+    color: rgb(0, 204, 255);
 }
 
 #gridContainer {
@@ -22,7 +29,6 @@ $medium: 600px;
 
 .teamMatches {
     position: relative;
-    top: -75px;
-    //pointer-events: none;
+    top: 100px;
 }
 
