@@ -90,6 +90,9 @@ const Teams = () => {
         console.log("in teams component")
         getTeams().then(res => {
           setTeams(res.data);
+        })
+        .catch(err => {
+          console.log("this is the error " + err)
         });
         return () => {
         }
