@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -86,14 +86,16 @@ const Teams = () => {
   const classes = useStyles();
   const [teams, setTeams] = useState<string[]>([]);
   const [teamObj, setTeamObj] = useState<any[]>([]);
+  const [sessionExpired, setSessionExpired] = useState(false); 
+
   useEffect(() => {
     console.log("in teams component")
     getTeams().then(res => {
       setTeams(res.data);
-    })
-      .catch(err => {
-        console.log("this is the error " + err)
-      });
+    }).catch(err => {
+      console.log("this is the error " + err)
+      setSessionExpired(true);
+    });
     return () => {
     }
   }, [])
@@ -123,6 +125,9 @@ const Teams = () => {
               >
                 <span
                   className={classes.imageSrc}
+                  style={{
+                    backgroundImage: `url(/Users/kunalshukla/ipl-dashboard/ipl-frontend/src/CSK.jpg)`,
+                  }}
                 />
                 <span className={classes.imageBackdrop} />
                 <span className={classes.imageButton}>
@@ -142,6 +147,7 @@ const Teams = () => {
           </div>
         </Grid>
       </Grid>
+      {sessionExpired &&  <div>Session Expired. Please use new token</div>}
     </>
   )
 }
