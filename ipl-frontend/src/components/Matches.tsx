@@ -24,7 +24,7 @@ export interface ITeamMatch {
     venue: string
 }
 
-const Matches: React.FC<ITeamName> = ({teamName}) => {
+const Matches: React.FC<ITeamName> = ({ teamName }) => {
 
     const [teamMatches, setTeamMatches] = useState<Array<ITeamMatch>>();
 
@@ -38,11 +38,11 @@ const Matches: React.FC<ITeamName> = ({teamName}) => {
 
     return (
         <>
-           <h1>Matches for {teamName}</h1>
-           {teamMatches?.map((teamMatch, i) => {
-               console.log(teamMatch);
-               return (<Match key={i} teamMatch={teamMatch}/>)
-           })} 
+            <h1>Matches for {teamName}</h1>
+            {teamMatches?.map((teamMatch, i) => {
+                console.log(teamMatch);
+                return (<Match key={i} teamMatch={teamMatch} />)
+            })}
         </>
     )
 }
