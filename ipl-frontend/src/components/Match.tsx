@@ -12,15 +12,6 @@ interface IProps {
     teamMatch: ITeamMatch
 }
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '150%',
-        left: '42%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },  
-}));
-
 const TabPanel = (props : any) => {
     const { children, value, index, ...other } = props;
   
@@ -49,8 +40,6 @@ TabPanel.propTypes = {
 
 const Match: React.FC<IProps> = ({teamMatch}) => {
     
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
     const [value, setValue] = React.useState(0);
 
     useEffect(() => {
@@ -58,15 +47,6 @@ const Match: React.FC<IProps> = ({teamMatch}) => {
         return () => {            
         }
     }, [])
-
-    const handleClick = (matchInfo: any) => {
-        console.log(matchInfo);
-        setOpen(true);
-    }
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleChange = (event: any, newValue: any) => {
         setValue(newValue);
@@ -83,7 +63,9 @@ const Match: React.FC<IProps> = ({teamMatch}) => {
             <TabPanel value={value} index={0}>
                 {teamMatch.date} <br/>
                 at {teamMatch.venue} <br/>
-                {teamMatch.matchWinner} won by {teamMatch.resultMargin} {teamMatch.result} 
+                {teamMatch.matchWinner} won by {teamMatch.resultMargin} {teamMatch.result} <br/>
+                Player of the Match: {teamMatch.playerOfMatch} <br/>
+                Venue: {teamMatch.venue} 
             </TabPanel>
         </>
     )
