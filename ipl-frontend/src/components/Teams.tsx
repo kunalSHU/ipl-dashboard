@@ -7,6 +7,12 @@ import { getTeams } from '../apis/apiService';
 import { resolveModuleNameFromCache } from 'typescript';
 import history from '../history';
 import Grid from '@material-ui/core/Grid';
+import {cskImage, miImage, pwImage,srhImage,rcbImage,rrImage,kkrImage,glImage,rpsImage,ktkImage,dcImage,kxipImage,dchImage} from './image';
+
+interface IFullTeam {
+  teamName: string
+  teamUrl: string
+}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -85,13 +91,20 @@ const Teams = () => {
 
   const classes = useStyles();
   const [teams, setTeams] = useState<string[]>([]);
+  const [fullTeams, setFullTeams] = useState<IFullTeam[]>([]);
   const [teamObj, setTeamObj] = useState<any[]>([]);
-  const [sessionExpired, setSessionExpired] = useState(false); 
+  const [sessionExpired, setSessionExpired] = useState(false);
+  let fTeams : IFullTeam[] = []; 
 
   useEffect(() => {
     console.log("in teams component")
     getTeams().then(res => {
       setTeams(res.data);
+      
+      console.log(res.data)
+      console.log(teams)
+      appendPics(res.data);
+
     }).catch(err => {
       console.log("this is the error " + err)
       setSessionExpired(true);
@@ -99,6 +112,72 @@ const Teams = () => {
     return () => {
     }
   }, [])
+
+  const appendPics = (teamData: string[]) => {
+    console.log("in append pics function")
+    console.log(teamData);
+    //fullTeam.push(1);
+    teamData.map(team => {
+      if (team === "Chennai Super Kings") {
+        fTeams = [...fTeams, {teamName: team, teamUrl: cskImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Mumbai Indians") {
+
+        fTeams = [...fTeams, {teamName: team, teamUrl: miImage}]
+        setFullTeams(fTeams);
+
+      } else if (team === "Pune Warriors") {
+
+        fTeams = [...fTeams, {teamName: team, teamUrl: pwImage}]
+        setFullTeams(fTeams);
+
+      } else if (team === "Sunrisers Hyderabad") {
+
+        fTeams = [...fTeams, {teamName: team, teamUrl: srhImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Rajasthan Royals") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: rrImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Royal Challengers Bangalore") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: rcbImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Kolkata Knight Riders") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: kkrImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Gujarat Lions") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: glImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Rising Pune Supergiant") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: rpsImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Kochi Tuskers Kerala") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: ktkImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Delhi Capitals") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: dcImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Kings XI Punjab") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: kxipImage}]
+        setFullTeams(fTeams);
+      } else if (team === "Deccan Chargers") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: dchImage}]
+        setFullTeams(fullTeams);
+      } else if (team === "Rising Pune Supergiants") {
+        
+        fTeams = [...fTeams, {teamName: team, teamUrl: rpsImage}]
+        setFullTeams(fTeams);
+      }
+    })
+  }
 
   const handleChange = (event: any) => {
     console.log(event.target.innerText);
@@ -113,10 +192,10 @@ const Teams = () => {
       <Grid container direction='row' justify="flex-start">
         <Grid key='0' item xs={12}>
           <div className={classes.root}>
-            {teams.map((team) => (
+            {fullTeams.map((team) => (
               <ButtonBase
                 focusRipple
-                key={team}
+                key={team.teamName}
                 className={classes.image}
                 focusVisibleClassName={classes.focusVisible}
                 style={{
@@ -126,7 +205,7 @@ const Teams = () => {
                 <span
                   className={classes.imageSrc}
                   style={{
-                    backgroundImage: `url(/Users/kunalshukla/ipl-dashboard/ipl-frontend/src/CSK.jpg)`,
+                    backgroundImage: `url(${team.teamUrl})`,
                   }}
                 />
                 <span className={classes.imageBackdrop} />
@@ -138,7 +217,7 @@ const Teams = () => {
                     className={classes.imageTitle}
                     onClick={handleChange}
                   >
-                    {team}
+                    {team.teamName}
                     <span className={classes.imageMarked} />
                   </Typography>
                 </span>
@@ -148,6 +227,7 @@ const Teams = () => {
         </Grid>
       </Grid>
       {sessionExpired &&  <div>Session Expired. Please use new token</div>}
+      {/* {JSON.stringify(fullTeams)} */}
     </>
   )
 }
