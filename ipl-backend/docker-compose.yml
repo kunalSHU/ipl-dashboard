@@ -1,0 +1,7 @@
+services:
+  ipl-backend-app:
+    container_name: ipl-backend
+    image: ipl-backend
+    build: ./
+    ports:
+      - 8443:8443
