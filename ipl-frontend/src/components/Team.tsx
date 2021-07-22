@@ -105,28 +105,16 @@ const Team = () => {
             <Typography className={classes.title} variant="h6" noWrap>
               {teamInfo?.teamName}
             </Typography>
-            {/* <Grid container spacing={1} justifyContent="flex-end">
-                <Grid item xs={1} > */}
-            {/* </Grid>
-                </Grid> */}
           </Toolbar>
         </AppBar>
       </div>
-
-      {/* <div id="teamInfo">
-                <p id="wins">Total Wins: {teamInfo?.totalWins}</p>
-                <p>Total Matches: {teamInfo?.totalMatches}</p>
-            </div> */}
       <Button id="link" variant="outlined" href="/teams" color="primary">
         Back to teams page
       </Button>
-
-      {/* <Grid item xs={1}> */}
       <div>
         Total Wins: {teamInfo?.totalWins} <br />
         Total Matches: {teamInfo?.totalMatches}
       </div>
-
       <div className="teamMatches">
         <Matches teamName={teamInfo?.teamName} />
       </div>

@@ -7,6 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import { getMatchesForTeam } from '../apis/apiService';
+import history from '../history';
 
 interface IProps {
   teamMatch: ITeamMatch
@@ -52,11 +54,16 @@ const Match: React.FC<IProps> = ({ teamMatch }) => {
     setValue(newValue);
   };
 
+  const tabClick = (team2: string) => {
+    history.push(`/teams/${team2}`)
+    history.go(0) // render the component automatically
+  }
+
   return (
     <>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label={`vs ${teamMatch.team2}`}/>
+          <Tab label={`vs ${teamMatch.team2}`} onClick={() => tabClick(teamMatch.team2)}/>
           <SportsCricketIcon />
         </Tabs>
       </AppBar>
