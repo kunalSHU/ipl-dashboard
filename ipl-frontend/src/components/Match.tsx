@@ -56,7 +56,7 @@ const Match: React.FC<IProps> = ({ teamMatch }) => {
     <>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label={teamMatch.team2} />
+          <Tab label={`vs ${teamMatch.team2}`}/>
           <SportsCricketIcon />
         </Tabs>
       </AppBar>
