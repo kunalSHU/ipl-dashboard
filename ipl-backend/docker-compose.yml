@@ -4,4 +4,102 @@ services:
     image: ipl-backend
     build: ./
     ports:
-      - 8443:8443
+      - 8081:8081
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: elasticsearch
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es_02,es_03
+      - cluster.initial_master_nodes=elasticsearch,es_02,es_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es_02
+    environment:
+      - node.name=es_02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=elasticsearch,es_03
+      - cluster.initial_master_nodes=elasticsearch,es_02,es_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data02:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9201
+    networks:
+      - elastic
+
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es_03
+    environment:
+      - node.name=es_03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=elasticsearch,es_02
+      - cluster.initial_master_nodes=elasticsearch,es_02,es_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data03:/usr/share/elasticsearch/data
+    ports:
+      - 9202:9202
+    networks:
+      - elastic
+
+  kib01:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kib_01
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - elastic
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.3
+    container_name: log_01
+    ports:
+      - '5000:5000'
+    volumes:
+      - type: bind
+        source: ./src/main/resources/logstashpipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    networks:
+      - elastic
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
