@@ -1,0 +1,6 @@
+services:
+    ipl-frontend-app:
+        container_name: ipl-frontend
+        ports: ["3000:3000"]
+        image: ipl-frontend
+        build: ./
