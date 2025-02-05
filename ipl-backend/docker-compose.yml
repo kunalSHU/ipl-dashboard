@@ -83,7 +83,7 @@ services:
     image: docker.elastic.co/logstash/logstash:7.9.3
     container_name: log_01
     ports:
-      - '5000:5000'
+      - '5001:5001'
     volumes:
       - type: bind
         source: ./src/main/resources/logstashpipeline
