@@ -45,7 +45,7 @@ public class BatchConfiguration {
                 .resource(new ClassPathResource("match-data.csv"))
                 .delimited()
                 .names(FIELD_NAMES)
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<MatchFromCSV>() {{
                     setTargetType(MatchFromCSV.class);
                 }})
                 .build();
