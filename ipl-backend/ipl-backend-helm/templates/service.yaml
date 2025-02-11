@@ -8,8 +8,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: http
+      nodePort: 30000
   selector:
     {{- include "ipl-backend-helm.selectorLabels" . | nindent 4 }}
