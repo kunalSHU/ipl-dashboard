@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ipl-backend-helm.fullname" . }}
+  name: ipl-backend-service
   labels:
-    {{- include "ipl-backend-helm.labels" . | nindent 4 }}
+    app: ipl-backend-service
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       name: http
       nodePort: 30000
   selector:
-    {{- include "ipl-backend-helm.selectorLabels" . | nindent 4 }}
+    app: ipl-backend-deployment

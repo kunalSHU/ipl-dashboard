@@ -1,40 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ipl-backend-helm.fullname" . }}
+  name: ipl-backend-deployment
   labels:
-    {{- include "ipl-backend-helm.labels" . | nindent 4 }}
+    app: ipl-backend-deployment
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "ipl-backend-helm.selectorLabels" . | nindent 6 }}
-  template:
+      app: ipl-backend-deployment
+      service: ipl-backend-deployment
+  template: # this part under the template applies to pod
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      name: ipl-backend-deployment
       labels:
-        {{- include "ipl-backend-helm.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        app: ipl-backend-deployment
+        service: ipl-backend-deployment
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "ipl-backend-helm.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      imagePullSecrets: {{ .Values.imagePullSecrets }}
       containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.securityContext }}
+        - name: ipl-backend-deployment
           securityContext: {}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -42,16 +27,18 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8081
-            initialDelaySeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8081
-            initialDelaySeconds: 30
+#          livenessProbe:
+#            failureThreshold: 10
+#            httpGet:
+#              path: /actuator/health
+#              port: 8081
+#            initialDelaySeconds: 30
+#          readinessProbe:
+#            failureThreshold: 10
+#            httpGet:
+#              path: /actuator/health
+#              port: 8081
+#            initialDelaySeconds: 30
           resources: {}
           volumeMounts: {{ .Values.volumeMounts }}
       volumes: []
