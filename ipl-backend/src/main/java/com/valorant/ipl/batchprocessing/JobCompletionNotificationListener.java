@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
     @Override
     public void afterJob(JobExecution jobExecution) {
-        if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
+        if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
 
             Map<String, Team> teamMap1 = new HashMap<>();
@@ -43,7 +42,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
             // total matches in team1 column
             em.createQuery("select team1, count('*') as numMatches from Match group by team1", Object[].class)
-                .getResultList()
+                    .getResultList()
                     .stream()
                     .map(res -> new Team((String) res[0], (long) res[1]))
                     .forEach(x -> teamMap1.put(x.getTeamName(), x));
@@ -64,7 +63,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
                     });
 
             // save all teams to Team table with the number of total matches played
-            teamTotalMatchesPlayed.forEach((teamName,numGamesPlayed) -> {
+            teamTotalMatchesPlayed.forEach((teamName, numGamesPlayed) -> {
 
                 // getting total wins for a team
                 Long totalWins = (Long) em.createQuery("select count('*') from Match where matchWinner= ?1")
@@ -79,7 +78,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
             teamRepository.findAll()
                     .forEach(team -> System.out.println(team.getTeamName() + " played " + team.getTotalMatches() + " matches and won "
-                    + team.getTotalWins()));
+                            + team.getTotalWins()));
 
         }
 

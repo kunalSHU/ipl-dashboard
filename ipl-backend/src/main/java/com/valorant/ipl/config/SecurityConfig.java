@@ -18,14 +18,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.cors();
         http
+
                 .httpBasic().disable()
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/oauth2/**").permitAll()
+                        .antMatchers("/oauth2/**", "/oauth/**", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
 
                 )
