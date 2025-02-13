@@ -12,4 +12,5 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findByTeam1(final String teamName);
 
     List<Match> findByTeam2(final String teamName);
+
 }
