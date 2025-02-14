@@ -7,11 +7,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
-import { getMatchesForTeam } from '../apis/apiService';
 import history from '../history';
 
 interface IProps {
-  teamMatch: ITeamMatch
+  teamMatch: ITeamMatch,
 }
 
 const TabPanel = (props: any) => {
@@ -43,12 +42,6 @@ TabPanel.propTypes = {
 const Match: React.FC<IProps> = ({ teamMatch }) => {
 
   const [value, setValue] = React.useState(0);
-
-  useEffect(() => {
-    console.log(teamMatch);
-    return () => {
-    }
-  }, [])
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);

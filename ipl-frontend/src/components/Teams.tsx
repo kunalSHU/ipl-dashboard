@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import { getTeams } from '../apis/apiService';
+import { getOktaToken, getTeams } from '../apis/apiService';
 import { resolveModuleNameFromCache } from 'typescript';
 import history from '../history';
 import Grid from '@material-ui/core/Grid';
@@ -93,11 +93,18 @@ const Teams = () => {
   const [teams, setTeams] = useState<string[]>([]);
   const [fullTeams, setFullTeams] = useState<IFullTeam[]>([]);
   const [teamObj, setTeamObj] = useState<any[]>([]);
-  const [sessionExpired, setSessionExpired] = useState(false);
+  const [unexpectedError, setUnexpectedError] = useState(false);
   let fTeams : IFullTeam[] = []; 
 
   useEffect(() => {
     console.log("in teams component")
+
+    let tokenPromise = getOktaToken();
+    tokenPromise.then((res: any) => {
+      console.log(res.data.access_token)
+      sessionStorage.setItem("token", res.data.access_token)
+    })
+
     getTeams().then(res => {
       setTeams(res.data);
       
@@ -105,9 +112,8 @@ const Teams = () => {
       console.log(teams)
       appendPics(res.data);
 
-    }).catch(err => {
-      console.log("this is the error " + err)
-      setSessionExpired(true);
+    }).catch((err: AxiosError) => {
+      setUnexpectedError(true)
     });
     return () => {
     }
@@ -226,7 +232,7 @@ const Teams = () => {
           </div>
         </Grid>
       </Grid>
-      {sessionExpired &&  <div>Session Expired. Please use new token</div>}
+      {unexpectedError &&  <div>Unexpected error occurred. Please try again later.</div>}
       {/* {JSON.stringify(fullTeams)} */}
     </>
   )
