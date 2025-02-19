@@ -97,27 +97,24 @@ const Teams = () => {
   let fTeams : IFullTeam[] = []; 
 
   useEffect(() => {
-    console.log("in teams component")
-
-    let tokenPromise = getOktaToken();
-    tokenPromise.then((res: any) => {
-      console.log(res.data.access_token)
-      sessionStorage.setItem("token", res.data.access_token)
-    })
-
-    getTeams().then(res => {
-      setTeams(res.data);
-      
-      console.log(res.data)
-      console.log(teams)
-      appendPics(res.data);
-
-    }).catch((err: AxiosError) => {
-      setUnexpectedError(true)
-    });
-    return () => {
-    }
+    console.log(window.location.hostname)
+    getTokenAndDisplayTeams();
   }, [])
+
+  const getTokenAndDisplayTeams = async () => {
+    try {
+      let oktaResponse = await getOktaToken();
+      sessionStorage.setItem("token", oktaResponse.data.access_token)
+
+      // Get the teams
+      let teamsResponse = await getTeams();
+      setTeams(teamsResponse.data);
+      appendPics(teamsResponse.data);
+    } catch (err) {
+      console.log(err);
+      setUnexpectedError(true)
+    }
+  }
 
   const appendPics = (teamData: string[]) => {
     console.log("in append pics function")
