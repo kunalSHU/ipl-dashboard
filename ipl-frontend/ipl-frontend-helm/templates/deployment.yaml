@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipl-frontend-deployment
+  labels:
+    app: ipl-frontend-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: ipl-frontend-deployment
+      service: ipl-frontend-deployment
+  template: # this part under the template applies to pod
+    metadata:
+      name: ipl-frontend-deployment
+      labels:
+        app: ipl-frontend-deployment
+        service: ipl-frontend-deployment
+    spec:
+      imagePullSecrets: {{ .Values.imagePullSecrets }}
+      containers:
+        - name: ipl-frontend-deployment
+          securityContext: {}
+          image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+#          livenessProbe:
+#            failureThreshold: 10
+#            httpGet:
+#              path: /actuator/health
+#              port: 8081
+#            initialDelaySeconds: 30
+#          readinessProbe:
+#            failureThreshold: 10
+#            httpGet:
+#              path: /actuator/health
+#              port: 8081
+#            initialDelaySeconds: 30
+          resources: {}
+          volumeMounts: {{ .Values.volumeMounts }}
+      volumes: []
+      nodeSelector: {}
+      affinity: {}
+      tolerations: []
