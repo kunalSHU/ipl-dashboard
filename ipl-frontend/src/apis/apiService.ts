@@ -12,6 +12,8 @@ axios.interceptors.request.use(config => {
 })
 
 export const getOktaToken = async () => {
+    console.log("getOktaToken")
+    console.log(oktaUrlEndpoint)
     return await axios.get<any>(oktaUrlEndpoint);
 }
 
