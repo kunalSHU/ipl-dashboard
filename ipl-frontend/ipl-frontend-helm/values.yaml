@@ -28,7 +28,7 @@ service:
 
 ingress:
   enabled: false
-  className: ""
+  className: "ipl-frontend-ingress"
   annotations: {}
   hosts:
     - host: chart-example.local
