@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/oauth2/**", "/oauth/**", "/actuator/health").permitAll()
+                        .antMatchers("/api/oauth2/**", "/api/oauth/**", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
 
                 )
