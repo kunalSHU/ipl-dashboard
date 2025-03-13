@@ -1,4 +1,4 @@
-# IPL Frontend Application
+# IPL Application
 
 This project is the frontend for the IPL (Indian Premier League) dashboard application, built using React. It's designed to run locally in a Minikube Kubernetes environment with Nginx Ingress.
 
