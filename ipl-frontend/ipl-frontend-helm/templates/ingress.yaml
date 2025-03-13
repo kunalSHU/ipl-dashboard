@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ipl-frontend-ingress
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: nginx
   rules:
   - host: ipl.local # Define your desired domain/hostname here
     http:
