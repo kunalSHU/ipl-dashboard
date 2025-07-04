@@ -2,22 +2,23 @@ package com.valorant.ipl.batchprocessing;
 
 import com.valorant.ipl.model.Team;
 import com.valorant.ipl.repository.TeamRepository;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.Map;
 
 
 @Slf4j
 @Component
-public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
+public class JobCompletionNotificationListener implements JobExecutionListener {
 
     private final JdbcTemplate jdbcTemplate;
 

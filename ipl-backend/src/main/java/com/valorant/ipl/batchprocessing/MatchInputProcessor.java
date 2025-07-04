@@ -3,14 +3,15 @@ package com.valorant.ipl.batchprocessing;
 import com.valorant.ipl.data.MatchFromCSV;
 import com.valorant.ipl.model.Match;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class MatchInputProcessor implements ItemProcessor<MatchFromCSV, Match> {
 
     @Override
-    public Match process(final MatchFromCSV matchFromCSV) throws Exception {
-
+    public Match process(final MatchFromCSV matchFromCSV) {
         // create a match object
         return Match.builder()
                 .id(Long.parseLong(matchFromCSV.getId()))
